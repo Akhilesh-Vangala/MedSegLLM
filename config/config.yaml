@@ -1,0 +1,42 @@
+training:
+  batch_size: 4
+  num_epochs: 50
+  learning_rate: 1e-4
+  use_mixed_precision: true
+  gradient_clip: 1.0
+  optimizer:
+    type: adamw
+    learning_rate: 1e-4
+    weight_decay: 0.01
+  scheduler:
+    type: cosine
+    T_max: 50
+  loss:
+    type: combined
+    ce_weight: 0.5
+    dice_weight: 0.3
+    focal_weight: 0.2
+
+segmentation:
+  models:
+    - mask_rcnn
+    - unet
+    - attention_unet
+    - deeplabv3
+    - segformer
+  ensemble: true
+  postprocessing: true
+
+llm:
+  model_name: meta-llama/Llama-2-7b-chat-hf
+  use_lora: true
+  use_4bit: true
+  max_length: 1000
+
+evaluation:
+  metrics:
+    - iou
+    - dice
+    - hausdorff
+    - surface_distance
+    - volume_similarity
